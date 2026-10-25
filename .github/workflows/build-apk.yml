@@ -14,22 +14,25 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Gradle
+      - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
+      - name: Extract Android project
+        run: unzip -o RIYA_FITNESS_APK_BUILD_READY.zip
+
       - name: Build APK
-        run: gradle --no-daemon assembleDebug
+        run: gradle --no-daemon -p RIYA_FITNESS assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: RIYA-FITNESS-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: RIYA_FITNESS/app/build/outputs/apk/debug/app-debug.apk
